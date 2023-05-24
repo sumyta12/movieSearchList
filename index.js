@@ -14,18 +14,19 @@ document.querySelector("button").addEventListener("click", function () {
   document.querySelector(".errortext").textContent = ``;
   const input = document.querySelector("input");
   const inputValue = input.value ? input.value : "Blade Runner";
-  getMovieData(`https://www.omdbapi.com/?s=${inputValue}&apikey=${apikey}`).then(
-    (data) => {
-      if (data.Response === "False") {
-        document.querySelector(".movieIcone").classList.add("hide");
-        return (document.querySelector(
-          ".errortext"
-        ).textContent = ` I am not finding any movies 🤐 ${inputValue}`);
-      } else {
-        return getMovieDataDisplay(data.Search);
-      }
+  getMovieData(
+    `https://www.omdbapi.com/?s=${inputValue}&apikey=${apikey}`
+  ).then((data) => {
+    if (data.Response === "False") {
+      document.querySelector(".movieOutput .container").innerHTML = ``;
+      document.querySelector(".movieIcone").classList.add("hide");
+      return (document.querySelector(
+        ".errortext"
+      ).textContent = ` I am not finding any movies 🤐 ${inputValue}`);
+    } else {
+      return getMovieDataDisplay(data.Search);
     }
-  );
+  });
 });
 
 function getMovieDataDisplay(data) {
