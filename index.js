@@ -12,9 +12,17 @@ async function getMovieData(urlink) {
 
 document.querySelector("button").addEventListener("click", function () {
   document.querySelector(".errortext").textContent = ``;
-  getMovieData(`${baseurl}?s='game'&apikey=${apikey}`).then((data) =>
-    getMovieDataDisplay(data.Search)
-  );
+  const input = document.querySelector("input");
+  const inputValue = input.value ? input.value : "Blade Runner";
+  getMovieData(`${baseurl}?s=${inputValue}&apikey=${apikey}`).then((data) => {
+    if (data.Response === "False") {
+      document.querySelector(".movieIcone").classList.add("hide");
+      return (document.querySelector(".errortext").textContent =
+       ` I am not finding any movies 🤐 ${inputValue}` );
+    } else {
+      return getMovieDataDisplay(data.Search);
+    }
+  });
 });
 
 function getMovieDataDisplay(data) {
@@ -102,7 +110,17 @@ document.querySelector(".mywatchlist").addEventListener("click", function () {
     document.querySelector(".errortext").textContent =
       "You are not yet added anything to the watch list";
   } else {
-
+    const newArr = [];
+    const watcharr = watchlistArr.filter(function (item) {
+      const duplicate = newArr.includes(item.imdbID);
+      if (!duplicate) {
+        newArr.push(item.imdbID);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    watchlistArr = watcharr;
     getMovieDataDisplay(watchlistArr);
   }
 });
