@@ -14,15 +14,18 @@ document.querySelector("button").addEventListener("click", function () {
   document.querySelector(".errortext").textContent = ``;
   const input = document.querySelector("input");
   const inputValue = input.value ? input.value : "Blade Runner";
-  getMovieData(`${baseurl}?s=${inputValue}&apikey=${apikey}`).then((data) => {
-    if (data.Response === "False") {
-      document.querySelector(".movieIcone").classList.add("hide");
-      return (document.querySelector(".errortext").textContent =
-       ` I am not finding any movies 🤐 ${inputValue}` );
-    } else {
-      return getMovieDataDisplay(data.Search);
+  getMovieData(`http://www.omdbapi.com/?s=${inputValue}&apikey=${apikey}`).then(
+    (data) => {
+      if (data.Response === "False") {
+        document.querySelector(".movieIcone").classList.add("hide");
+        return (document.querySelector(
+          ".errortext"
+        ).textContent = ` I am not finding any movies 🤐 ${inputValue}`);
+      } else {
+        return getMovieDataDisplay(data.Search);
+      }
     }
-  });
+  );
 });
 
 function getMovieDataDisplay(data) {
@@ -82,7 +85,9 @@ document.addEventListener("click", function (e) {
       ).textContent = `❤ added to watch list`;
 
       const imdbid = e.target.dataset.info;
-      const url = getMovieData(`${baseurl}?i=${imdbid}&apikey=${apikey}`);
+      const url = getMovieData(
+        `http://www.omdbapi.com/?i=${imdbid}&apikey=${apikey}`
+      );
       url.then((data) => {
         data.active = true;
         watchlistArr.push(data);
