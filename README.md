@@ -1,4 +1,7 @@
 # movieSearchList
-1.User Find different Movie item
-2. User also add to the watch list
-3. After refresh it will not hold any data
+<ul>
+  <li>User Find different Movie item</li>
+  <li>User also add to the watch list</li>
+  <li>After refresh it will not hold any data</li>
+</ul>
+
